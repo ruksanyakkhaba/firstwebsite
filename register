@@ -1,0 +1,33 @@
+import axios from 'axios'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+export const Register = () => {
+  const [username,setUsername]= useState("")
+  const [email,setemail]= useState("")
+  const [password,setpassword]= useState("")
+  const [error,seterror]= useState(false)
+  const navigate = useNavigate()
+
+  const handleRegister = async () => {
+    try{
+      const res = await axios.post(URL+"/api/auth/register",{
+        username,email,password})
+        setUsername(res.data.username)
+        setemail(res.data.email)
+        setpassword(res.data.password)
+        seterror(false)
+        navigate("/login")
+    }
+    catch(err){
+      seterror(true)
+      console.log(err)
+    }
+  }
+  return (
+<>
+</>
+  )
+}
+
+export default Register
