@@ -1,0 +1,44 @@
+  const EventEmitter = require('events');
+  const eventEmitter = new EventEmitter();
+
+  const CreatePost = () => {
+      const handleSubmit = (newPost) => {
+          eventEmitter.emit('newPost', newPost);
+      };
+  };
+
+  const HomePost = () => {
+      useEffect(() => {
+          const handleNewPost = (newPost) => {
+              // Logic to add new post
+          };
+          eventEmitter.on('newPost', handleNewPost);
+          return () => {
+              eventEmitter.off('newPost', handleNewPost);
+          };
+      }, []);
+  };
+  
+
+import HomePost from './HomePost';
+
+function HomePage() {
+  const [posts, setPosts] = useState([]);
+  
+  // In a real app, you would fetch posts from your API
+  // useEffect(() => {
+  //   fetch('/api/posts')
+  //     .then(res => res.json())
+  //     .then(data => setPosts(data));
+  // }, []);
+
+  return (
+    <div className="max-w-2xl mx-auto py-6 px-4">
+      {posts.length > 0 ? (
+        posts.map(post => <HomePost key={post.id} post={post} />)
+      ) : (
+        <HomePost /> // Shows sample post if no posts provided
+      )}
+    </div>
+  );
+}
